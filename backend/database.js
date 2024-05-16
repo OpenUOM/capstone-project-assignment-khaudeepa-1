@@ -27,8 +27,8 @@ const readTeachers = async () => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql)
-            .then((teachers) => {
-                resolve(teachers);
+            .then((data) => {
+                resolve(data);
             })
             .catch((error) => {
                 reject(error);
@@ -41,8 +41,8 @@ const readTeacherInfo = async (id) => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id])
-            .then((teacher) => {
-                resolve(teacher);
+            .then((data) => {
+                resolve(data);
             })
             .catch((error) => {
                 reject(error);
@@ -55,8 +55,8 @@ const addTeacher = async (id, name, age) => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id, name, age])
-            .then(() => {
-                resolve({status: "Successfully inserted Teacher"})
+            .then((data) => {
+                resolve(data);
             })
             .catch((error) => {
                 reject(error);
@@ -69,8 +69,8 @@ const updateTeacher = async (name, age, id) => {
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [name, age, id])
-            .then(() => {
-                resolve({status: "Successfully updated Teacher"})
+            .then((data) => {
+                resolve(data);
             })
             .catch((error) => {
                 reject(error);
@@ -79,12 +79,12 @@ const updateTeacher = async (name, age, id) => {
 }
 
 const deleteTeacher = async (id) => {
-    const sql = `DELETE FROM teacher WHERE id = ?`
+    const sql = `DELETE FROM teacher WHERE id=?`
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql, [id])
-            .then(() => {
-                resolve({status: "Successfully deleted Teacher"})
+            .then((data) => {
+                resolve(data);
             })
             .catch((error) => {
                 reject(error);
@@ -93,7 +93,7 @@ const deleteTeacher = async (id) => {
 }
 
 const readStudents = async () => {
-    const sql = `SELECT * FROM dummyData`
+    const sql = `SELECT * FROM student`
     return new Promise((resolve, reject) => {
         knex_db
             .raw(sql)
@@ -107,10 +107,10 @@ const readStudents = async () => {
 }
 
 const readStudentInfo = async (id) => {
-    const sql = `SELECT * FROM dummyData`
+    const sql = `SELECT * FROM student WHERE id=?`
     return new Promise((resolve, reject) => {
         knex_db
-            .raw(sql)
+            .raw(sql, [id])
             .then((data) => {
                 resolve(data);
             })
@@ -120,11 +120,11 @@ const readStudentInfo = async (id) => {
     });
 }
 
-const addStudent = async (id, name, age, religion) => {
-    const sql = `SELECT * FROM dummyData`
+const addStudent = async (id, name, age, hometown) => {
+    const sql = `INSERT INTO student VALUES (?, ?, ?, ?)`
     return new Promise((resolve, reject) => {
         knex_db
-            .raw(sql)
+            .raw(sql, [id, name, age, hometown])
             .then((data) => {
                 resolve(data);
             })
@@ -134,11 +134,11 @@ const addStudent = async (id, name, age, religion) => {
     });
 }
 
-const updateStudent = async (name, age, religion, id) => {
-    const sql = `SELECT * FROM dummyData`
+const updateStudent = async (name, age, hometown, id) => {
+    const sql = `UPDATE student SET name=?, age=?, hometown=? WHERE id=?`
     return new Promise((resolve, reject) => {
         knex_db
-            .raw(sql)
+            .raw(sql, [name, age, hometown, id])
             .then((data) => {
                 resolve(data);
             })
@@ -149,10 +149,10 @@ const updateStudent = async (name, age, religion, id) => {
 } 
 
 const deleteStudent = async (id) => {
-    const sql = `SELECT * FROM dummyData`
+    const sql = `DELETE FROM student WHERE id=?`
     return new Promise((resolve, reject) => {
         knex_db
-            .raw(sql)
+            .raw(sql, [id])
             .then((data) => {
                 resolve(data);
             })
