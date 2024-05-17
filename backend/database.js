@@ -160,7 +160,7 @@ const deleteStudent = async (id) => {
                 reject(error);
             });
     });
-}
+} 
 
 module.exports = {
     readTeachers,
